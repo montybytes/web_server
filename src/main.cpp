@@ -18,26 +18,54 @@ int main()
 
     bind(serverSocket, (struct sockaddr *)&address, sizeof(address));
 
-    // listen to incoming connections
-    listen(serverSocket, 5);
-
-    int clientSocket = accept(serverSocket, nullptr, nullptr);
-    char buffer[1024] = {0};
-
     // infinite loop to listen for client connection and messages
     while (1)
     {
+        // listen to incoming connections
+        listen(serverSocket, 5);
+
+        int clientSocket = accept(serverSocket, nullptr, nullptr);
+        char buffer[1024] = {0};
+
         recv(clientSocket, buffer, sizeof(buffer), 0);
 
-        cout << "Client: " << buffer << endl;
+        // cout << "Client: " << buffer << endl;
 
-        // close server when certain message is received
-        if (strcmp(buffer, "exit") == 0)
+        // HTML content to send
+        std::string htmlContent =
+            "<html>"
+            "<head><title>Welcome</title></head>"
+            "<body><h1>Hello, World!</h1></body>"
+            "</html>";
+
+        // Construct the HTTP response
+        std::string response =
+            "HTTP/1.1 200 OK\r\n"
+            "Content-Type: text/html\r\n"
+            "Content-Length: " +
+            std::to_string(htmlContent.size()) + "\r\n"
+                                                 "\r\n" +
+            htmlContent;
+
+        // Send the response
+        ssize_t bytesSent = send(clientSocket, response.c_str(), response.size(), 0);
+        if (bytesSent == -1)
         {
-            close(serverSocket);
-            return 0;
+            std::cerr << "Error sending response to client\n";
         }
+        else
+        {
+            std::cout << "Response sent successfully\n";
+        }
+
+        // if (strcmp(buffer, "exit") == 0)
+        // {
+        //     return 0;
+        // }
     }
+
+    // close server when process terminates
+    close(serverSocket);
 
     return 0;
 }
