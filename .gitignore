@@ -46,3 +46,7 @@ _deps
 CMakeUserPresets.json
 .build
 build
+
+# vscode stuff
+.dev_container
+.vscode
