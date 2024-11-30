@@ -9,17 +9,14 @@
 #include <map>
 #include <algorithm>
 
-using namespace std;
+#include "request.h"
 
-const string line_break = "\r\n";
+using namespace std;
 
 sockaddr_in address;
 
 int initializeServer(uint16_t);
-string parseRequest(string);
 void sendResponse(string, int);
-
-vector<string> splitString(const string &, const string &);
 
 int main()
 {
@@ -39,20 +36,9 @@ int main()
         // receive request from client
         recv(clientSocket, requestBuffer, sizeof(requestBuffer), 0);
 
-        // spliting request into major parts; method, headers & content
-        vector<string> request = splitString(string(requestBuffer), line_break);
+        Request clientRequest;
 
-        vector<string> method = splitString(request[0], " "); // http method line
-        // constructing header map
-        map<string, string> headers;
-        int index = distance(request.begin(), find(request.begin(), request.end(), "\n"));
-
-        for (int i = 1; i < index; i++)
-        {
-            vector<string> header = splitString(request[i], ": ");
-            // assign key-value pairs corresponding to header key-values
-            headers[header[0]] = header[1];
-        }
+        clientRequest.parseRequest(requestBuffer);
 
         // TODO: get file requested
 
@@ -115,26 +101,4 @@ void sendResponse(string response, int clientSocket)
     {
         throw "Error sending response to client";
     }
-}
-
-vector<string> splitString(const string &input, const string &delimiter)
-{
-    vector<string> tokens;
-
-    size_t pos = 0, start = 0;
-
-    while ((pos = input.find(delimiter, start)) != string::npos)
-    {
-        if (pos > start)
-        {
-            tokens.push_back(input.substr(start, pos - start));
-        }
-        start = pos + 1;
-    }
-
-    if (start < input.length())
-    {
-        tokens.push_back(input.substr(start));
-    }
-    return tokens;
 }
