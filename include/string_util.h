@@ -1,9 +1,6 @@
-#include <vector>
-#include <string>
-#include <iostream>
-
 using namespace std;
 
+// function to split strings
 inline vector<string> splitString(const string &input, const string &delimiter)
 {
     vector<string> tokens;
@@ -26,6 +23,7 @@ inline vector<string> splitString(const string &input, const string &delimiter)
     return tokens;
 }
 
+// function to remove trailing whitespace+newline+tabs chars
 inline string trim(const string &str)
 {
     size_t start = str.find_first_not_of(" \t\n\r");
