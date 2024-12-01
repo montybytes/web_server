@@ -4,50 +4,35 @@
 #include <algorithm>
 
 #include "request.h"
-#include "string_util.h"
 
 using namespace std;
-
-// variables/constants
-const string line_break = "\r\n";
 
 // TODO: implement request functions to process requests
 Request Request::parseRequest(const char *requestBuffer)
 {
-    cout << "Raw request: " << requestBuffer << endl
-         << endl;
+     // spliting request into major parts; method, headers & content
+     vector<string> request = splitString(string(requestBuffer), "\r\n");
 
-    // spliting request into major parts; method, headers & content
-    vector<string> request = splitString(string(requestBuffer), line_break);
+     // extracting method, path and version from header
+     vector<string> resource = splitString(request[0], " ");
 
-    // extracting method, path and version from header
-    vector<string> resource = splitString(request[0], " ");
+     // constructing header map
+     map<string, string> headers;
+     // get index of the first newline character that has no text in same line
+     size_t bodySeparatorIdx = distance(request.begin(), find(request.begin(), request.end(), "\n"));
 
-    cout << "The request method: " << resource[0] << endl;
-    cout << "The path requested: " << resource[1] << endl;
-    cout << "The http version: " << resource[2] << endl;
+     for (size_t idx = 1; idx < bodySeparatorIdx; idx++)
+     {
+          vector<string> header = splitString(request[idx], ":");
+          // assign key-value pairs corresponding to header key-values
+          headers[trim(header[0])] = trim(header[1]);
+     }
 
-    // constructing header map
-    map<string, string> headers;
-    // get index of the first newline character that has no text in same line
-    int index = distance(request.begin(), find(request.begin(), request.end(), "\n"));
+     const string body = request[request.size() - 1];
 
-    cout << "The http headers are: " << endl;
-    for (int i = 1; i < index; i++)
-    {
-        vector<string> header = splitString(trim(request[i]), ": ");
-        // assign key-value pairs corresponding to header key-values
-        headers[header[0]] = header[1];
-    }
+     const Resource res = Resource(resource[0], resource[1], resource[2]);
 
-    for (auto const &header : headers)
-    {
-        cout << header.first << ": " << header.second << endl;
-    }
+     const Request req = Request(res, headers, body);
 
-    const Resource res = Resource(resource[0], resource[1], resource[2]);
-
-    const Request req = Request(&res, headers, nullptr);
-
-    return req;
+     return req;
 };

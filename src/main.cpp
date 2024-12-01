@@ -36,10 +36,7 @@ int main()
         // receive request from client
         recv(clientSocket, requestBuffer, sizeof(requestBuffer), 0);
 
-        Request clientRequest;
-
-        clientRequest.parseRequest(requestBuffer);
-
+        const Request clientRequest = Request::parseRequest(requestBuffer);
         // TODO: get file requested
 
         // fin.open(fileName);
@@ -57,9 +54,12 @@ int main()
 
         // HTML content to send
         string htmlContent =
+            "<!doctype html>"
             "<html>"
             "<head><title>Welcome</title></head>"
-            "<body><h1>Hello, World!</h1></body>"
+            "<body><h1>Hello, World!</h1>" +
+            clientRequest.body +
+            "</body>"
             "</html>";
 
         // Construct the HTTP response
