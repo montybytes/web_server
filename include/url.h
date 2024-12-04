@@ -5,16 +5,16 @@
 #include <map>
 #include <vector>
 
-#include "string_util.h"
+#include "string_utils.h"
 
 using namespace std;
 
 class URL
 {
-    string path;
-    map<string, string> parameters;
-
 public:
+    const string path;
+    const map<string, string> parameters;
+
     URL(const string &_path, const map<string, string> &_parameters)
         : path(_path), parameters(_parameters) {}
 

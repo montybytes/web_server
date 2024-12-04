@@ -7,7 +7,6 @@
 
 using namespace std;
 
-// TODO: implement request functions to process requests
 Request Request::parseRequest(const char *requestBuffer)
 {
      // spliting request into major parts; method, headers & content

@@ -5,8 +5,7 @@
 
 #include "url.h"
 
-enum HttpMethod
-{
+enum HttpMethod {
     GET,
     POST,
     PUT,
@@ -18,33 +17,36 @@ enum HttpMethod
 
 class Resource
 {
-    HttpMethod method;
-    URL target;
-    string protocol;
-
 public:
-    Resource(const string &methodRef, const string &targetRef, const string &protocolRef)
-        : target(URL::fromString(targetRef)), protocol(protocolRef)
+    const HttpMethod method;
+    const URL target;
+    const string protocol;
+
+    Resource(const string &_method, const string &_target, const string &_protocol)
+        : method(parseMethod(_method)), target(URL::fromString(_target)), protocol(_protocol) {}
+
+private:
+    static HttpMethod parseMethod(const string &_method)
     {
-        if (methodRef == "GET")
+        if (_method == "GET")
         {
-            method = HttpMethod::GET;
+            return HttpMethod::GET;
         }
-        else if (methodRef == "POST")
+        else if (_method == "POST")
         {
-            method = HttpMethod::POST;
+            return HttpMethod::POST;
         }
-        else if (methodRef == "PUT")
+        else if (_method == "PUT")
         {
-            method = HttpMethod::PUT;
+            return HttpMethod::PUT;
         }
-        else if (methodRef == "DELETE")
+        else if (_method == "DELETE")
         {
-            method = HttpMethod::DELETE;
+            return HttpMethod::DELETE;
         }
         else
         {
-            method = HttpMethod::UNKNOWN; // Default for unsupported methods
+            return HttpMethod::UNKNOWN; // Default for unsupported methods
         }
     }
 };

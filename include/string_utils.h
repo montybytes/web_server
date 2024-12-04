@@ -1,3 +1,8 @@
+#include <string>
+#include <sstream>
+#include <vector>
+#include <map>
+
 using namespace std;
 
 // function to split strings
@@ -34,4 +39,17 @@ inline string trim(const string &str)
     size_t end = str.find_last_not_of(" \t\n\r");
 
     return str.substr(start, end - start + 1);
+}
+
+// function to turn map into string
+inline string mapToString(const map<string, string> &_map)
+{
+    ostringstream stringStream;
+
+    for (const auto &pair : _map)
+    {
+        stringStream << pair.first << ":" << pair.second << "\n";
+    }
+
+    return stringStream.str();
 }
