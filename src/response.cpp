@@ -22,6 +22,7 @@ void Response::sendText(const string &text, const int &clientSocket)
         cerr << "Client disconnected while sending data" << endl;
         close(clientSocket);
     }
+    close(clientSocket);
 }
 
 void Response::sendBinary(const vector<char> &binary, const int &clientSocket)
@@ -32,6 +33,7 @@ void Response::sendBinary(const vector<char> &binary, const int &clientSocket)
         cerr << "Client disconnected while sending data" << endl;
         close(clientSocket);
     }
+    close(clientSocket);
 }
 
 void Response::setHeader(const string &key, const string &value)
