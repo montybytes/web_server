@@ -1,25 +1,37 @@
-A simple web server written in C++
+# A simple web server written in C++
 
-To-dos:
+This is a C++ project where I try to make a web server for the fun of it, plus learn more about system level C++. It is a _VERY_ barebones server so no fancy stuff like multithreading or compression...yet.
 
-- [x] Initialize the Server:
+⚠️ If you come accross this, please do not use! This server uses HTTP so **no** encryption is in place! ⚠️
 
-  - [x] Create a socket, bind to a port, and listen for incoming connections.
+## Current Objectives
 
-- [x] Accept a Connection:
+- [ ] Implement other error codes and general error handling
 
-  - [x] Accept a single client connection
-  - [x] Read the incoming HTTP request.
+- [ ] Implement unit tests
 
-- [X] Parse the Request:
+- [ ] Implement basic logging
 
-  - [X] Extract the HTTP method and requested path.
+- [ ] Implement sessions and cookies
 
-- [ ] Find and Serve the Resource:
+- [ ] Implement using a config file / cli arguments
 
-  - [ ] Look for the requested file in the server's root directory.
-  - [ ] If the file exists, read its contents and return it in the response.
-  - [ ] If not, return a "404 Not Found" response.
+- [ ] Implement memory caching for small files
 
-- [ ] Close the Connection:
-  - [ ] Send the response and close the connection.
+- [ ] Implement simple authentication for REST requests
+
+- [ ] Try ensure the following security risks are minimized:
+  - [ ] directory traversal attacks
+  - [ ] file disclosure
+  - [ ] input based injection attacks
+  - [ ] buffer overflows
+
+## Interesting Objectives
+
+- [ ] Multithreading
+
+- [ ] Asynchronous processing
+
+- [ ] HTTPS support
+
+- [ ] Response compression for large responses
