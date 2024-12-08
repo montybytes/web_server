@@ -5,34 +5,25 @@
 #include "response.h"
 #include "string_utils.h"
 
-void Response::sendStatusHeader(const int &clientSocket)
+//  TODO: implement error handling
+
+void Response::send(const int &clientSocket, const string &text)
 {
     // concatenate status string and header string
     const string responseHeaders = status + "\r\n" + mapToString(headers) + "\r\n";
-
-    // send final string to client
-    send(clientSocket, responseHeaders.c_str(), responseHeaders.size(), 0);
-}
-
-void Response::sendText(const string &text, const int &clientSocket)
-{
-    //  TODO: better error handling with throws
-    if (send(clientSocket, text.c_str(), text.size(), 0) == -1)
-    {
-        cerr << "Client disconnected while sending data" << endl;
-        close(clientSocket);
-    }
+    // send header string to client
+    ::send(clientSocket, responseHeaders.c_str(), responseHeaders.size(), 0);
+    ::send(clientSocket, text.c_str(), text.size(), 0);
     close(clientSocket);
 }
 
-void Response::sendBinary(const vector<char> &binary, const int &clientSocket)
+void Response::send(const int &clientSocket, const vector<char> &binary)
 {
-    //  TODO: better error handling with throws
-    if (send(clientSocket, binary.data(), binary.size(), 0) == -1)
-    {
-        cerr << "Client disconnected while sending data" << endl;
-        close(clientSocket);
-    }
+    // concatenate status string and header string
+    const string responseHeaders = status + "\r\n" + mapToString(headers) + "\r\n";
+    // send header string to client
+    ::send(clientSocket, responseHeaders.c_str(), responseHeaders.size(), 0);
+    ::send(clientSocket, binary.data(), binary.size(), 0);
     close(clientSocket);
 }
 

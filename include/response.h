@@ -19,11 +19,9 @@ public:
 
     void setHeader(const string &key, const string &value);
 
-    void sendStatusHeader(const int &socket);
+    void send(const int &socket, const string &text);
 
-    static void sendText(const string &text, const int &socket);
-
-    static void sendBinary(const vector<char> &binary, const int &socket);
+    void send(const int &socket, const vector<char> &binary);
 };
 
 #endif
