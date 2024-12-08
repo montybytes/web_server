@@ -1,13 +1,3 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <fstream>
-#include <sstream>
-#include <filesystem>
-
-namespace fs = std::filesystem;
-using namespace std;
-
 #include "file.h"
 
 bool File::isFileAvailable(const string &path)
@@ -20,30 +10,44 @@ string File::readText(const string &path)
     ifstream requestedFile(path);
 
     ostringstream stringBuffer;
+
+    // read text file data into string buffer
     stringBuffer << requestedFile.rdbuf();
 
-    // if file is not found print error and return 404
-    if (!requestedFile.is_open())
-    {
-        cerr << "Failed to open file" << endl;
-    }
+    // if file is not found thrrow 404 error
+    // if (!requestedFile.is_open())
+    // {
+    //     cerr << "Failed to open file" << endl;
+    // }
 
-    // const File file = File()
+    // close file
+    requestedFile.close();
 
-    return "";
+    return stringBuffer.str();
 }
 
-void File::readBinary(const string &path)
+vector<char> File::readFile(const string &path)
 {
-    ifstream requestedFile(path, ios::binary);
+    ifstream requestedFile(path, ios::binary | ios::ate);
 
-    // if file is not found print error and return 404
-    if (!requestedFile)
-    {
-        cerr << "Failed to open file" << endl;
-    }
+    // if file is not found throw 404 error
+    // if (!requestedFile.is_open())
+    // {
+    //     cerr << "Failed to open file" << endl;
+    // }
 
-    return;
+    // getting the size of the file
+    streamsize fileSize = requestedFile.tellg();
+    requestedFile.seekg(0, ios::beg);
+
+    // copy file data into buffer
+    vector<char> buffer(fileSize);
+    requestedFile.read(buffer.data(), fileSize);
+
+    // close file
+    requestedFile.close();
+
+    return buffer;
 }
 
 string File::mapPathToAbsolute(const string &path)
@@ -51,11 +55,22 @@ string File::mapPathToAbsolute(const string &path)
     // path to serve files from
     fs::path currentPath = fs::current_path().append("public");
 
+    cout << "<filesystem> current path: " << currentPath << endl;
+
     // append request path to static file directory
-    if (path != "/")
+    if (path == "/")
     {
-        return currentPath.append(path);
+        return currentPath / "index.html";
     }
 
-    return currentPath.append("index.html");
+    return currentPath / path.substr(1);
+}
+
+File File::fromPath(const fs::path &path)
+{
+    // get file contents from system
+    const vector<char> content = readFile(path);
+
+    // create file object and return object
+    return File(path.filename(), path.extension(), content, content.size());
 }

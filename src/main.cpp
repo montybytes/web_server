@@ -42,35 +42,35 @@ int main()
 
         const Request clientRequest = Request::parseRequest(requestBuffer);
 
+        cout << "Web requested path: "<< clientRequest.resource.target.path << endl;
+
         // map url to file system
         const string requestedFilePath = File::mapPathToAbsolute(clientRequest.resource.target.path);
 
-        cout << "File path: " << requestedFilePath << endl;
+        cout << "Modified path: " << requestedFilePath << endl;
 
+        // TODO: move to file.cpp
         // attempt to read file at given path
         if (!File::isFileAvailable(requestedFilePath))
         {
             // throw an exception and return 404
             Response response = Response("HTTP/1.1 404 Not Found");
             // set other necessary headers
-            response.sendStatusHeader(clientSocket);
-            response.sendText("No file found, sorry", clientSocket);
+            // response.setHeader("Content-Length", "69");
+            response.send(clientSocket, "No file found, sorry");
 
             continue;
         }
 
-        // file_url -> attempt to check for file -> read file if found ->
-
         // read file from directory
-        // const File requestedFile = File();
+        const File requestedFile = File::fromPath(requestedFilePath);
 
         // TODO: construct response
         Response response = Response("HTTP/1.1 200 OK");
 
         response.setHeader("Content-Type", "text/html");
-        // response.setHeader("Content-Length", to_string(fileSize));
-        response.sendStatusHeader(clientSocket);
-        response.sendText("<html><head><title>Welcome</title></head><body><h1>Hello, World!</body></html>", clientSocket);
+        response.setHeader("Content-Length", to_string(requestedFile.fileSize));
+        response.send(clientSocket, requestedFile.fileContent);
     }
 
     // close server when process terminates
