@@ -8,40 +8,10 @@
 #include <fstream>
 #include <sstream>
 #include <filesystem>
+#include <unordered_map>
 
 using namespace std;
 namespace fs = filesystem;
-
-enum ImageMime
-{
-    APNG,
-    AVIF,
-    GIF,
-    PNG,
-    JPEG,
-    SVG_XML,
-    WEBP
-};
-
-enum TextMime
-{
-    PLAIN,
-    CSS,
-    HTML,
-    JAVASCRIPT
-};
-
-enum ApplicationMime
-{
-    OCT_STREAM
-};
-
-enum MimeType
-{
-    ImageMime,
-    TextMime,
-    ApplicationMime
-};
 
 class File
 {
@@ -50,21 +20,16 @@ public:
     const string fileName;
     const string fileExtension;
     const vector<char> fileContent;
-    // const MimeType fileType;
 
     File(
         const string &_fileName,
         const string &_fileExtension,
         const vector<char> &_fileContent,
-        const size_t &_fileSize
-        // const MimeType &_fileType
-        ) : fileName(_fileName),
-            fileExtension(_fileExtension),
-            fileContent(_fileContent),
-            fileSize(_fileSize)
-    //   fileType(_fileType)
-    {
-    }
+        const size_t &_fileSize)
+        : fileName(_fileName),
+          fileExtension(_fileExtension),
+          fileContent(_fileContent),
+          fileSize(_fileSize) {}
 
     static bool isFileAvailable(const string &path);
 
@@ -75,6 +40,26 @@ public:
     static string mapPathToAbsolute(const string &path);
 
     static File fromPath(const fs::path &path);
+
+    static string getContentType(const string &extension);
+
+private:
+    static const inline unordered_map<string, string> contentTypeMap = {
+        {".html", "text/html"},
+        {".txt", "text/plain"},
+        {".json", "application/json"},
+        {".xml", "application/xml"},
+        {".jpg", "image/jpeg"},
+        {".jpeg", "image/jpeg"},
+        {".png", "image/png"},
+        {".gif", "image/gif"},
+        {".pdf", "application/pdf"},
+        {".zip", "application/zip"},
+        {".bin", "application/octet-stream"},
+        {".css", "text/css"},
+        {".js", "text/javascript"},
+        {"form-data.txt", "application/x-www-form-urlencoded"},
+    };
 };
 
 #endif

@@ -55,8 +55,6 @@ string File::mapPathToAbsolute(const string &path)
     // path to serve files from
     fs::path currentPath = fs::current_path().append("public");
 
-    cout << "<filesystem> current path: " << currentPath << endl;
-
     // append request path to static file directory
     if (path == "/")
     {
@@ -64,6 +62,17 @@ string File::mapPathToAbsolute(const string &path)
     }
 
     return currentPath / path.substr(1);
+}
+
+string File::getContentType(const string &extension)
+{
+    auto itr = contentTypeMap.find(extension);
+    if (itr != contentTypeMap.end())
+    {
+        return itr->second;
+    }
+
+    return "application/octet-stream";
 }
 
 File File::fromPath(const fs::path &path)

@@ -1,15 +1,19 @@
 <html>
   <head>
     <title>Welcome</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css" />
   </head>
 
   <body>
     <h1>Hello, World!</h1>
-    <span>Would you like to see my cat?</span>
-    <div class="cat_container">
+    <span>Would you like to see a cat?</span>
+    <div class="cat_container" onclick="showMeowdal()">
       <img src="./cat.jpg" alt="My lovely cat" />
       <i>Here she is</i>
     </div>
+    <div id="meowdal" class="cat_speak_overlay">
+      <div class="cat_speak">meow</div>
+    </div>
+    <script src="./script.js"></script>
   </body>
 </html>
