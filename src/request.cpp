@@ -1,11 +1,6 @@
-#include <vector>
-#include <string>
-#include <iostream>
 #include <algorithm>
 
 #include "request.h"
-
-using namespace std;
 
 Request Request::parseRequest(const char *requestBuffer)
 {
