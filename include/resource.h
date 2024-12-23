@@ -5,7 +5,8 @@
 
 #include "url.h"
 
-enum HttpMethod {
+enum HttpMethod
+{
     GET,
     POST,
     PUT,
@@ -28,6 +29,7 @@ public:
 private:
     static HttpMethod parseMethod(const string &_method)
     {
+        //todo: throw 501 for POST,PUT,DELETE
         if (_method == "GET")
         {
             return HttpMethod::GET;
@@ -44,9 +46,16 @@ private:
         {
             return HttpMethod::DELETE;
         }
+        else if (_method == "HEAD" || _method == "OPTIONS" || _method == "TRACE" || _method == "PATCH" || _method == "CONNECT")
+        {
+            // Unsupported methods
+            // todo: throw 405 for unsupported methods
+            return HttpMethod::UNKNOWN;
+        }
         else
         {
-            return HttpMethod::UNKNOWN; // Default for unsupported methods
+            // todo: throw 400: bad request error
+            return HttpMethod::UNKNOWN;
         }
     }
 };

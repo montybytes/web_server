@@ -21,7 +21,9 @@ void handleSignal(int signal)
     }
 }
 
-// TODO: put server logic in a managebale class
+// todo: put server logic in a managebale class
+// todo: add error handler for all failed socket operations - internal error
+
 int main()
 {
     // close port gracefully
@@ -44,7 +46,7 @@ int main()
     while (1)
     {
         int clientSocket = accept(serverSocket, nullptr, nullptr);
-        // TODO: check for appropriate size and throw error if request is over size
+        // todo: find appropriate request buffer size
         char requestBuffer[1024] = {0};
 
         // receive request from client

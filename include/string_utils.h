@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// todo: throw 500 in case of failure
 // function to split strings
 inline vector<string> splitString(const string &input, const string &delimiter)
 {
@@ -28,6 +29,7 @@ inline vector<string> splitString(const string &input, const string &delimiter)
     return tokens;
 }
 
+// todo: throw 500 in case of failure
 // function to remove trailing whitespace+newline+tabs chars
 inline string trim(const string &str)
 {
@@ -41,6 +43,7 @@ inline string trim(const string &str)
     return str.substr(start, end - start + 1);
 }
 
+// todo: throw 500 in case of failure
 // function to turn map into string
 inline string mapToString(const map<string, string> &_map)
 {

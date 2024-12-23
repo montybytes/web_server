@@ -30,11 +30,10 @@ vector<char> File::readFile(const string &path)
 {
     ifstream requestedFile(path, ios::binary | ios::ate);
 
-    // if file is not found throw 404 error
-    // if (!requestedFile.is_open())
-    // {
-    //     cerr << "Failed to open file" << endl;
-    // }
+    if (!requestedFile.is_open())
+    {
+        // todo: throw 404 if file doesn't exist
+    }
 
     // getting the size of the file
     streamsize fileSize = requestedFile.tellg();
@@ -52,6 +51,7 @@ vector<char> File::readFile(const string &path)
 
 string File::mapPathToAbsolute(const string &path)
 {
+    // todo: find a way to ensure current_path is always the directory the server is running from
     // path to serve files from
     fs::path currentPath = fs::current_path().append("public");
 
@@ -66,7 +66,9 @@ string File::mapPathToAbsolute(const string &path)
 
 string File::getContentType(const string &extension)
 {
+    // todo: throw 415 if find returns string::npos
     auto itr = contentTypeMap.find(extension);
+
     if (itr != contentTypeMap.end())
     {
         return itr->second;
