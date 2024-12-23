@@ -2,6 +2,8 @@
 #include <sstream>
 #include <vector>
 #include <unordered_map>
+#include <cctype>
+#include <algorithm>
 
 using namespace std;
 
@@ -55,4 +57,20 @@ inline string mapToString(const unordered_map<string, string> &_map)
     }
 
     return stringStream.str();
+}
+
+// todo: throw 500 in case of failure
+// function to convert strings to all lowercase
+inline string toLowercase(const string &str)
+{
+    string lowercase_str = str;
+
+    transform(
+        lowercase_str.begin(),
+        lowercase_str.end(),
+        lowercase_str.begin(),
+        [](unsigned char c)
+        { return tolower(c); });
+
+    return lowercase_str;
 }
