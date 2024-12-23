@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "url.h"
+#include "error.h"
 
 enum HttpMethod
 {
@@ -29,33 +30,32 @@ public:
 private:
     static HttpMethod parseMethod(const string &_method)
     {
-        //todo: throw 501 for POST,PUT,DELETE
+        // throw 501 for POST,PUT,DELETE until implemented
         if (_method == "GET")
         {
             return HttpMethod::GET;
         }
         else if (_method == "POST")
         {
-            return HttpMethod::POST;
+            throw Error(ErrorCode::E501_NOT_IMPLEMENTED);
         }
         else if (_method == "PUT")
         {
-            return HttpMethod::PUT;
+            throw Error(ErrorCode::E501_NOT_IMPLEMENTED);
         }
         else if (_method == "DELETE")
         {
-            return HttpMethod::DELETE;
+            throw Error(ErrorCode::E501_NOT_IMPLEMENTED);
         }
         else if (_method == "HEAD" || _method == "OPTIONS" || _method == "TRACE" || _method == "PATCH" || _method == "CONNECT")
         {
             // Unsupported methods
-            // todo: throw 405 for unsupported methods
-            return HttpMethod::UNKNOWN;
+            throw Error(ErrorCode::E405_METHOD_NOT_ALLOWED);
         }
         else
         {
-            // todo: throw 400: bad request error
-            return HttpMethod::UNKNOWN;
+            // non http method = bad request
+            throw Error(ErrorCode::E400_BAD_REQUEST);
         }
     }
 };

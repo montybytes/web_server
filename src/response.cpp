@@ -4,9 +4,9 @@
 
 #include "response.h"
 #include "string_utils.h"
+#include "error.h"
 
-// todo: check for failed string operations - internal error
-// todo: check for failed socket operations - internal error
+// todo: throw internal error & log for failed string operations
 
 void Response::send(const int &clientSocket, const string &text)
 {
@@ -15,6 +15,7 @@ void Response::send(const int &clientSocket, const string &text)
 
     // send header string to client
     ::send(clientSocket, responseHeaders.c_str(), responseHeaders.size(), 0);
+    //  send body text
     ::send(clientSocket, text.c_str(), text.size(), 0);
 
     close(clientSocket);
@@ -27,6 +28,7 @@ void Response::send(const int &clientSocket, const vector<char> &binary)
 
     // send header string to client
     ::send(clientSocket, responseHeaders.c_str(), responseHeaders.size(), 0);
+    //  send binary data
     ::send(clientSocket, binary.data(), binary.size(), 0);
 
     close(clientSocket);

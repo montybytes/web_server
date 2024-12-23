@@ -31,8 +31,6 @@ public:
           fileContent(_fileContent),
           fileSize(_fileSize) {}
 
-    static bool isFileAvailable(const string &path);
-
     static string readText(const string &path);
 
     static vector<char> readFile(const string &path);

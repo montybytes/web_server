@@ -6,7 +6,7 @@ This is a C++ project where I try to make a web server for the fun of it, plus l
 
 ## Current Objectives
 
-- [ ] Implement other error codes and general error handling
+- [x] Implement other error codes and general error handling
 
 - [ ] Implement unit tests
 

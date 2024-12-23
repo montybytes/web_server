@@ -15,3 +15,10 @@ set(
 
 add_executable(server.out ${EXECUTABLES})
 target_include_directories(server.out PRIVATE ${PROJECT_INCLUDE_DIR})
+
+# specify the source and destination directories
+set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/public)
+set(DEST_DIR ${CMAKE_BINARY_DIR})
+
+# copy the folder
+file(COPY ${SOURCE_DIR} DESTINATION ${DEST_DIR})

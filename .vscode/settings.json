@@ -2,6 +2,14 @@
   "files.associations": {
     "iosfwd": "cpp",
     "string": "cpp",
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "fstream": "cpp",
+    "iostream": "cpp",
+    "numbers": "cpp",
+    "*.tcc": "cpp",
+    "variant": "cpp",
+    "array": "cpp",
+    "string_view": "cpp",
+    "initializer_list": "cpp"
   }
 }

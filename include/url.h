@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "string_utils.h"
+#include "error.h"
 
 using namespace std;
 
@@ -18,13 +19,17 @@ public:
     URL(const string &_path, const unordered_map<string, string> &_parameters)
         : path(_path), parameters(_parameters) {}
 
-    // todo: throw 500 for failed string operations
+    // todo: throw internal error & log for failed string operations
     static URL fromString(const string &urlString)
     {
         string path = urlString;
         string params = "";
 
-        // todo: throw 414 if path is extremely large
+        // if path is extremely large
+        if (path.size() > 8192)
+        {
+            throw Error(ErrorCode::E414_URI_TOO_LONG);
+        }
 
         const size_t paramStartIdx = urlString.find_first_of("?");
 

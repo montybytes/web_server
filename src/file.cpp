@@ -1,9 +1,5 @@
 #include "file.h"
-
-bool File::isFileAvailable(const string &path)
-{
-    return ifstream(path).good();
-}
+#include "error.h"
 
 string File::readText(const string &path)
 {
@@ -14,11 +10,11 @@ string File::readText(const string &path)
     // read text file data into string buffer
     stringBuffer << requestedFile.rdbuf();
 
-    // if file is not found thrrow 404 error
-    // if (!requestedFile.is_open())
-    // {
-    //     cerr << "Failed to open file" << endl;
-    // }
+    // throw 404 if file doesn't exist
+    if (!requestedFile.is_open() || !ifstream(path).good())
+    {
+        throw Error(ErrorCode::E404_NOT_FOUND);
+    }
 
     // close file
     requestedFile.close();
@@ -30,9 +26,10 @@ vector<char> File::readFile(const string &path)
 {
     ifstream requestedFile(path, ios::binary | ios::ate);
 
-    if (!requestedFile.is_open())
+    // throw 404 if file doesn't exist
+    if (!requestedFile.is_open() || !ifstream(path).good())
     {
-        // todo: throw 404 if file doesn't exist
+        throw Error(ErrorCode::E404_NOT_FOUND);
     }
 
     // getting the size of the file
@@ -51,7 +48,6 @@ vector<char> File::readFile(const string &path)
 
 string File::mapPathToAbsolute(const string &path)
 {
-    // todo: find a way to ensure current_path is always the directory the server is running from
     // path to serve files from
     fs::path currentPath = fs::current_path().append("public");
 
@@ -66,12 +62,16 @@ string File::mapPathToAbsolute(const string &path)
 
 string File::getContentType(const string &extension)
 {
-    // todo: throw 415 if find returns string::npos
     auto itr = contentTypeMap.find(extension);
 
     if (itr != contentTypeMap.end())
     {
         return itr->second;
+    }
+    // if find returns end of the map
+    else
+    {
+        throw Error(ErrorCode::E415_UNSUPPORTED_MEDIA_TYPE);
     }
 
     return "application/octet-stream";
