@@ -26,7 +26,7 @@ public:
         string params = "";
 
         // if path is extremely large
-        if (path.size() > 8192)
+        if (path.size() > 512)
         {
             throw Error(ErrorCode::E414_URI_TOO_LONG);
         }
