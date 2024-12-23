@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -12,7 +12,7 @@ class Response
 {
 public:
     const string status;
-    map<string, string> headers;
+    unordered_map<string, string> headers;
 
     Response(const string &_status)
         : status(_status) {}

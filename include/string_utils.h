@@ -1,7 +1,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -45,7 +45,7 @@ inline string trim(const string &str)
 
 // todo: throw 500 in case of failure
 // function to turn map into string
-inline string mapToString(const map<string, string> &_map)
+inline string mapToString(const unordered_map<string, string> &_map)
 {
     ostringstream stringStream;
 

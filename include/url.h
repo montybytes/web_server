@@ -2,7 +2,7 @@
 #define URL_H
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 #include "string_utils.h"
@@ -13,9 +13,9 @@ class URL
 {
 public:
     const string path;
-    const map<string, string> parameters;
+    const unordered_map<string, string> parameters;
 
-    URL(const string &_path, const map<string, string> &_parameters)
+    URL(const string &_path, const unordered_map<string, string> &_parameters)
         : path(_path), parameters(_parameters) {}
 
     // todo: throw 500 for failed string operations
@@ -36,7 +36,7 @@ public:
         }
 
         // create map of parameters
-        map<string, string> paramMap;
+        unordered_map<string, string> paramMap;
         vector<string> paramList = splitString(params, "&");
 
         for (size_t idx = 0; idx < paramList.size(); idx++)
