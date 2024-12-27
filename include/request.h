@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <variant>
 
 #include "url.h"
 #include "resource.h"
