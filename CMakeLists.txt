@@ -7,7 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 set(PROJECT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(
     EXECUTABLES 
-    ${CMAKE_SOURCE_DIR}/src/main.cpp 
+    ${CMAKE_SOURCE_DIR}/src/main.cpp
+    ${CMAKE_SOURCE_DIR}/src/server.cpp
     ${CMAKE_SOURCE_DIR}/src/request.cpp
     ${CMAKE_SOURCE_DIR}/src/response.cpp
     ${CMAKE_SOURCE_DIR}/src/file.cpp
