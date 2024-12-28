@@ -4,10 +4,15 @@
 #include "request.h"
 #include "error.h"
 
-Request Request::parseRequest(const char *requestBuffer)
+Request Request::parseRequest(const string &requestBuffer)
 {
      // spliting request into major parts; method|headers|body
-     vector<string> request = splitString(string(requestBuffer), "\r\n");
+     vector<string> request = splitString(requestBuffer, "\r\n");
+
+     if (requestBuffer.empty())
+     {
+          throw Error(ErrorCode::E400_BAD_REQUEST);
+     }
 
      /*
           constructing resource line object

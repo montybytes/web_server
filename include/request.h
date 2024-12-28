@@ -22,7 +22,7 @@ public:
             const string &_body)
         : resource(_res), headers(_headers), body(_body) {}
 
-    static Request parseRequest(const char *requestBuffer);
+    static Request parseRequest(const string &requestBuffer);
 };
 
 #endif
