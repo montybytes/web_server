@@ -1,3 +1,6 @@
+#ifndef STRINGUTILS_H
+#define STRINGUTILS_H
+
 #include <string>
 #include <sstream>
 #include <vector>
@@ -11,6 +14,11 @@ using namespace std;
 // function to split strings
 inline vector<string> splitString(const string &input, const string &delimiter)
 {
+    if (input.empty() || (input.size() == 1 && delimiter != ""))
+    {
+        return {};
+    }
+
     vector<string> tokens;
 
     size_t pos = 0, start = 0;
@@ -35,6 +43,11 @@ inline vector<string> splitString(const string &input, const string &delimiter)
 // function to remove trailing whitespace+newline+tabs chars
 inline string trim(const string &str)
 {
+    if (str == "")
+    {
+        return "";
+    }
+
     size_t start = str.find_first_not_of(" \t\n\r");
     if (start == string::npos)
     {
@@ -49,6 +62,11 @@ inline string trim(const string &str)
 // function to turn map into string
 inline string mapToString(const unordered_map<string, string> &_map)
 {
+    if (_map.size() == 0)
+    {
+        return "";
+    }
+
     ostringstream stringStream;
 
     for (const auto &pair : _map)
@@ -74,3 +92,5 @@ inline string toLowercase(const string &str)
 
     return lowercase_str;
 }
+
+#endif
