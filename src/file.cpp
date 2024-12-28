@@ -48,16 +48,7 @@ vector<char> File::readFile(const string &path)
 
 string File::mapPathToAbsolute(const string &path)
 {
-    // path to serve files from
-    fs::path currentPath = fs::current_path().append("public");
-
-    // append request path to static file directory
-    if (path == "/")
-    {
-        return currentPath / "index.html";
-    }
-
-    return currentPath / path.substr(1);
+    return fs::current_path() / path;
 }
 
 string File::getContentType(const string &extension)
