@@ -3,6 +3,7 @@ project(HTTPServer VERSION 0.1)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
+# set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 
 set(PROJECT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(
@@ -17,9 +18,5 @@ set(
 add_executable(server.out ${EXECUTABLES})
 target_include_directories(server.out PRIVATE ${PROJECT_INCLUDE_DIR})
 
-# specify the source and destination directories
-set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/public)
-set(DEST_DIR ${CMAKE_BINARY_DIR})
-
-# copy the folder
-file(COPY ${SOURCE_DIR} DESTINATION ${DEST_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/public DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/config.ini DESTINATION ${CMAKE_BINARY_DIR})
