@@ -60,7 +60,7 @@ void Server::loadConfig()
 }
 
 // Initialize server & listen to incoming connections
-void Server::initialize(const int &port)
+void Server::initialize()
 {
     this->loadConfig();
 
@@ -74,6 +74,8 @@ void Server::initialize(const int &port)
 
     bind(serverSocket, (struct sockaddr *)&address, sizeof(address));
     listen(serverSocket, 5);
+
+    cout << "Server started at: " << this->configs.at("server_port") << endl;
 }
 
 // Start processing of requests on server
@@ -152,7 +154,7 @@ File Server::getStaticFile(const string &path)
         absolutePath = File::mapPathToAbsolute(root / path);
     }
 
-    cout << absolutePath << endl;
+    cout << "Requested: " << absolutePath << endl;
 
     return File::fromPath(absolutePath);
 }

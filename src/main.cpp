@@ -16,7 +16,7 @@ int main()
 
         registerSignalHandlers(&server);
 
-        server.initialize(8080);
+        server.initialize();
         server.start();
     }
     catch (const exception &e)

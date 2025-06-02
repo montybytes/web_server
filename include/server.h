@@ -12,7 +12,7 @@ using namespace std;
 class Server
 {
 public:
-    void initialize(const int &port);
+    void initialize();
     void start();
     void stop();
 

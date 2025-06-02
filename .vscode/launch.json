@@ -5,7 +5,7 @@
       "name": "Debug C++ Project",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceRoot}/build/server.out",
+      "program": "${workspaceRoot}/build/server",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

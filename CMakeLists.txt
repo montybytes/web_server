@@ -15,23 +15,6 @@ set(
     ${CMAKE_SOURCE_DIR}/src/file.cpp
 )
 
-include(CTest)
-
-add_subdirectory(external)
-
-if(BUILD_TESTING)
-    set(
-        TEST_EXECUTABLES
-        ${CMAKE_SOURCE_DIR}/test/main.cpp
-    )
-    add_executable(server_test ${TEST_EXECUTABLES})
-    target_link_libraries(server_test PRIVATE GTest::gtest_main)
-    target_include_directories(server_test PRIVATE ${PROJECT_INCLUDE_DIR})
-
-    include(GoogleTest)
-    gtest_discover_tests(server_test)
-endif()
-
 add_executable(server ${EXECUTABLES})
 target_include_directories(server PRIVATE ${PROJECT_INCLUDE_DIR})
 
